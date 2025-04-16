@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer-Services</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css">
+  <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
+  <!-- my style sheet -->
+  <link rel="stylesheet" href="css/userService.css">
+</head>
+<body>
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <!-- Logo left end -->
+      <a class="navbar-brand" href="#"><img src="images/VO_MedSpa_Horizontal_Blue.webp" id="logo" alt="logo"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="userAbout.html">About</a>
+          </li>
+          <!--<li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Service
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <li><a class="dropdown-item" href="#">Aesthetician Service</a></li>
+                  <li><a class="dropdown-item" href="#">Body Fat</a></li>
+                  <li><a class="dropdown-item" href="#">BBL & Moxi</a></li>
+                  <li><a class="dropdown-item" href="#">Lip Flip</a></li>
+                  <li><a class="dropdown-item" href="#">Laser Hair Removal</a></li>
+                  <li><a class="dropdown-item" href="#">CoolSculpting</a></li>
+              </ul>
+          </li>-->
+          <li class="nav-item">
+            <a class="nav-link" href="userService.html">Service</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="userProduct.html">Product</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="userContact.html">Contact</a>
+          </li>
+        </ul>
+      </div>
+      <!-- Cart and Login aligned to the right -->
+      <div class="d-flex ms-auto">
+        <a class="nav-link me-3 text-dark" href="userCart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
+        <a class="nav-link me-3" id="login" href="Login.html"><i class="fa-solid fa-user"></i> Login</a>
+      </div>
+    </div>
+  </nav>
+
+</header>
+<div class="hero-section mb-5">
+  <h1>V/O Med's Services  </h1>
+  <h4>  Defy Age.
+    Look Amazing.</h4>
+</div>
+<div id="serviceContainer"></div>
+
+<!--<div class="container text-sm-start mt-5">
+  <div class="row">
+    <div class="col align-content-center">
+      <h3 class="text-center">BBL & MOXI</h3>
+      ÀNI Private Resorts all rest within landscaped gardens on generous ocean-side properties and have been designed to offer
+      an abundance of spaces in which to dine and socialize – both indoors and out – with incredible views. No meal is ever
+      the same, as each setting, menu, décor, and finishing touch is curated to surprise, delight, and inspire you and your
+      guests, whether you’re dining beneath the stars on a rooftop terrace or in a sun-gilded dining room overlooking the
+      Indian Ocean.
+    </div>
+    <div class="col align-middle ps-5 pt-1">
+      <img src="images/Service/BBL%20&%20Moxi.jpg" class="img-fluid rounded " id="service-img" alt="Ani-Resort">
+    </div>
+  </div>
+</div>
+<div class="container text-sm-start mt-5">
+  <div class="row">
+    <div class="col align-middle ps-5 pt-1">
+      <img src="images/Service/body%20fat%20service.jpg" class="img-fluid rounded "id="service-img"
+           alt="Ani-Resort">
+    </div>
+    <div class="col align-content-center">
+      <h4 id="timeDuration" ><i class="fa-solid fa-clock"></i>1:00</h4>
+      <h3 class="text-center">BODY FAT</h3>
+      where the morning sun casts a golden glow over the lush surroundings. Your breakfast is served on a cozy terrace overlooking the ocean or nestled in the shade of tropical trees, with a soft breeze drifting through. The table is elegantly set with a variety of fresh fruit, pastries, and maybe a glass of fresh-squeezed juice or a hot cup of coffee.
+      In the background, the gentle sound of waves or a nearby waterfall creates a soothing soundtrack. You take a bite of your breakfast, savoring the flavors and the peaceful view, while feeling the warmth of the morning sun. It's the perfect start to a relaxing day, surrounded by beauty and calm, far from the bustle of everyday life.
+    </div>
+
+
+  </div>-->
+<!--</div>-->
+<div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="bookingModalLabel">Book an Appointment</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="userEmail" class="form-label">Email Address</label>
+            <input type="email" class="form-control" id="userEmail" placeholder="Enter your email" required>
+          </div>
+          <div class="mb-3">
+            <label for="appointmentDate" class="form-label">Preferred Date</label>
+            <input type="date" class="form-control" id="appointmentDate" required>
+          </div>
+          <div class="mb-3">
+            <label for="appointmentTime" class="form-label">Preferred Time</label>
+            <input type="time" class="form-control" id="appointmentTime" required>
+          </div>
+          <div class="mb-3">
+            <label for="serviceName" class="form-label">Select Service</label>
+            <select class="form-select" id="serviceName" required onchange="updateDetails()">
+
+            </select>
+          </div>
+
+          <button id="bookAppointmentBtn" type="submit" class="btn btn-primary w-100 btn-hover">Book Now</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="fotter">
+  <!-- Footer Section -->
+  <footer class="bg-white text-dark py-4">
+    <div class="container">
+      <div class="row">
+        <!-- Logo Section -->
+        <div class="col-12 col-md-3 text-center text-md-start">
+          <a href="#">
+            <img src="images/VO_MedSpa_Horizontal_Blue.webp" alt="Logo" class="footer-logo" width="180">
+          </a>
+        </div>
+
+        <!-- Links Section -->
+        <div class="col-12 col-md-3 text-center my-3 my-md-0">
+          <ul class="list-unstyled">
+            <li><a href="#" class="text-dark">Home</a></li>
+            <li><a href="#" class="text-dark">About</a></li>
+            <li><a href="#" class="text-dark">Services</a></li>
+            <li><a href="#" class="text-dark">Products</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="col-12 col-md-3 text-center my-3 my-md-0">
+          <h5>Contact</h5>
+          <p><a href="mailto:info@example.com" class="text-dark">V/OMed's@gmail.com</a></p>
+          <p><a href="tel:+1234567890" class="text-dark">+123 456 7890</a></p>
+          <p><a href="#" class="text-dark">Nupe matara</a></p>
+        </div>
+
+        <!-- Social Media Section -->
+        <div class="col-12 col-md-3 text-center">
+          <ul class="list-unstyled d-flex justify-content-center">
+            <li><a href="#" class="text-dark me-3"><i class="fab fa-facebook"></i></a></li>
+            <li><a href="#" class="text-dark me-3"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="#" class="text-dark me-3"><i class="fab fa-instagram"></i></a></li>
+            <li><a href="#" class="text-dark me-3"><i class="fab fa-linkedin"></i></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="text-center mt-4">
+        <p class="mb-0">© 2025 V/O Aesthetic Lounge. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+</section>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+<script src="js/customerService.js"></script>
+</body>
+</html>

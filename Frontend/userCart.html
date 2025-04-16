@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Cart</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Shopping Cart</h2>
+
+    <div class="table-responsive">
+        <table class="table table-bordered text-center">
+            <thead class="table-dark">
+            <tr>
+                <th>Image</th>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>Remove</th>
+            </tr>
+            </thead>
+            <tbody id="cart-items"></tbody>
+        </table>
+</div>
+    <div class="text-end">
+        <h4>Total: <span id="grand-total">RS: 0.00</span></h4>
+        <form method="post" action="https://sandbox.payhere.lk/pay/checkout">
+            <input type="hidden" id="merchant_id" name="merchant_id">
+            <input type="hidden" id="return_url" name="return_url">
+            <input type="hidden" id="cancel_url" name="cancel_url">
+            <input type="hidden" id="notify_url" name="notify_url">
+            <input type="hidden" id="order_id" name="order_id">
+            <input type="hidden" id="items" name="items">
+            <input type="hidden" id="currency" name="currency">
+            <input type="hidden" name="first_name" value="Saman">
+            <input type="hidden" name="last_name" value="Perera">
+            <input type="hidden" id="email" name="email" placeholder="Email">
+            <input type="hidden" id="phone" name="phone" placeholder="Phone">
+            <input type="hidden" id="address" name="address" placeholder="Address">
+            <input type="hidden" id="city" name="city" placeholder="City">
+            <input type="hidden" id="country" name="country" placeholder="Country">
+
+        <input type="hidden" id="hash" name="hash">
+        <button class="btn btn-success" id="checkout-button">Checkout</button>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        const token = localStorage.getItem("token");
+        if (!token) return alert("You must be logged in.");
+
+        const decoded = jwt_decode(token);
+        const email = decoded.email || decoded.sub;
+
+        loadCartItems(email);
+        const amount = parseFloat($("#amount").val());
+        console.log(email)
+
+
+            $("#checkout-button").on("click", function () {
+                const rawText = $("#grand-total").text();
+                const cleanText = rawText.replace(/[^\d.]/g, "");
+                const amount = parseFloat(cleanText);
+                $.ajax({
+                    url: `http://localhost:8080/api/v1/payment/init?email=${email}&amount=${amount}`,
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + token
+                    },
+
+                    success: function (response) {
+                        if (response.statusCode === 200) {
+                            // alert("Payment details successfully");
+                            console.log("Hash: " + response.data.hash);
+                            document.getElementById('merchant_id').value = response.data.merchantId;
+                            document.getElementById('return_url').value = response.data.returnUrl;
+                            document.getElementById('cancel_url').value = response.data.cancelUrl;
+                            document.getElementById('notify_url').value = response.data.notifyUrl;
+                            document.getElementById('order_id').value = response.data.id
+                            document.getElementById('items').value = "Wellness Product";
+                            document.getElementById('currency').value = "LKR";
+                            document.getElementById('hash').value = response.data.hash;
+                            document.getElementById('firstName').value = response.data.firstName;
+                            document.getElementById('lastName').value = response.data.lastName;
+                            document.getElementById('email').value = response.data.email;
+                            document.getElementById('phone').value = response.data.phone;
+                            document.getElementById('address').value = response.data.address;
+                            document.getElementById('city').value = response.data.city;
+                            document.getElementById('country').value = response.data.country;
+                            console.log(response.data.merchantId);
+                            console.log(response.data.returnUrl);
+                            console.log(response.data.cancelUrl);
+                            console.log(response.data.notifyUrl);
+                            console.log(response.data.id);
+                            console.log("Hash: " + response.data.hash);
+                            console.log(response.data.firstName)
+                            console.log(response.data.lastName)
+                            console.log(response.data.email)
+                            console.log(response.data.phone)
+                            console.log(response.data.address)
+                            console.log(response.data.city)
+                            console.log(response.data.country)
+
+                        } else {
+                            alert("Payment initiation failed: " + response.message);
+                        }
+                    },
+                    error: function (err) {
+                        console.error(err);
+                        alert("Error while initiating payment.");
+                    }
+                });
+            });
+    });
+    function loadCartItems(email) {
+        const token = localStorage.getItem("token");
+        $.ajax({
+            url: "http://localhost:8080/api/v1/cart/get/" + email,
+            type: "GET",
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            success: function (response) {
+                displayCartItems(response.data);
+            },
+            error: function (xhr) {
+                console.error("Load Cart Error:", xhr.responseText);
+            }
+        });
+    }
+
+    function displayCartItems(cartItems) {
+        let cartTable = $("#cart-items").empty();
+        let grandTotal = 0;
+
+        cartItems.forEach(item => {
+            let price = item.price ?? 0;
+            let quantity = item.quantity;
+            let total = quantity * price;
+            grandTotal += total;
+
+            let row = $("<tr>");
+            let quantityDisplay = $("<span>").addClass("mx-2").text(quantity);
+
+            let quantityCell = $("<td>").append(
+                $("<button>").addClass("btn btn-sm btn-outline-primary").text("-").click(function () {
+                    if (quantity > 1) {
+                        quantity--;
+                        quantityDisplay.text(quantity);
+                        updateTotals();
+                        updateCartQuantity(item.cartId, quantity);
+                    }
+                }),
+                quantityDisplay,
+                $("<button>").addClass("btn btn-sm btn-outline-primary").text("+").click(function () {
+                    quantity++;
+                    quantityDisplay.text(quantity);
+                    updateTotals();
+                    updateCartQuantity(item.cartId, quantity);
+                })
+            );
+
+            let rowData = {
+                price: price,
+                quantityDisplay: quantityDisplay,
+                totalCell: $("<td>").addClass("total-price").text(`RS: ${total.toFixed(2)}`)
+            };
+
+            row.append(
+                $("<td>").append($("<img>").attr("src", "images/Product/" + item.image).attr("width", "70")),
+                $("<td>").text(item.productName),
+                quantityCell,
+                $("<td>").text(`RS: ${price.toFixed(2)}`),
+                rowData.totalCell,
+                $("<td>").append(
+                    $("<button>").addClass("btn btn-sm btn-danger").html('<i class="fa fa-trash"></i>').click(() => removeCartItem(item.cartId, row))
+                )
+            );
+
+            row.data(rowData);
+            cartTable.append(row);
+        });
+
+        updateTotals();
+    }
+
+    function updateCartQuantity(cartId, newQty) {
+        $.ajax({
+            url: `http://localhost:8080/api/v1/cart/update/${cartId}`,
+            type: "PUT",
+            contentType: "application/json",
+            data: JSON.stringify({ quantity: newQty }),
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            },
+            success: () => console.log("Quantity updated in DB"),
+            error: (xhr) => console.error("Quantity update error:", xhr.responseText)
+        });
+    }
+
+    function removeCartItem(cartId, row) {
+        $.ajax({
+            url: `http://localhost:8080/api/v1/cart/remove/${cartId}`,
+            type: "DELETE",
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            },
+            success: () => {
+                row.remove();
+                updateTotals();
+            },
+            error: (xhr) => console.error("Remove error:", xhr.responseText)
+        });
+    }
+
+    function updateTotals() {
+        let grandTotal = 0;
+        $("#cart-items tr").each(function () {
+            let row = $(this);
+            let price = row.data("price");
+            let quantity = parseInt(row.data("quantityDisplay").text());
+            let total = price * quantity;
+            grandTotal += total;
+            row.data("totalCell").text(`RS: ${total.toFixed(2)}`);
+        });
+        $("#grand-total").text(`RS: ${grandTotal.toFixed(2)}`);
+    }
+</script>
+
+</body>
+</html>
