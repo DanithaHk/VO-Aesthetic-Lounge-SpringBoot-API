@@ -4,6 +4,7 @@ V/O Aesthetic Lounge is an advanced wellness platform designed to elevate custom
 
 ### Live Demo
 - [**V/O Aesthetic Lounge Demo**](https://voaestheticlounge-api.netlify.app)
+- [**V/O Aesthetic Lounge YOUTUBE VIDEO**](https://youtu.be/ZhiF-HsnPAY?si=fVIXX8mIyHq-9jBl)
 
 ---
 ## 🌐 Features
@@ -95,12 +96,20 @@ Members  can view their past bookings, including details such as service types, 
 ![Screenshot (62)](https://github.com/user-attachments/assets/70f6726b-6de8-460b-86ac-7d9268877876)
 
 
+
+
+### 📜 PAYMENT
+PayHERE GATWAY
+
+![Screenshot (84)](https://github.com/user-attachments/assets/21c71f84-f9d2-4481-8cf1-971e97f39ff8)
+
+![Screenshot (85)](https://github.com/user-attachments/assets/5603f72e-2f5a-4f07-a511-1119d8636355)
+![Screenshot (86)](https://github.com/user-attachments/assets/f8185e36-577e-40da-96fa-2ae5e424f705)
+
 ### 🔓 Secure Login
 
 
 ![Screenshot (54)](https://github.com/user-attachments/assets/f17668f4-ba45-496c-bd33-0831ff0c6040)
-
-
 ### 👥 New Member Registration
 
 
