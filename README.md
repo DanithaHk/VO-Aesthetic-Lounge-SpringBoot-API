@@ -40,8 +40,7 @@ V/O Aesthetic Lounge is an advanced wellness platform designed to elevate custom
 - **PayHere Payment Gateway**
 - **Email Notifications**
 
-### View Live Demo
-- **https://voaestheticlounge-api.netlify.app**
+
 
 ---
 
