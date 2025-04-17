@@ -183,7 +183,6 @@ spring.mail.properties.mail.smtp.starttls.enable = true
 **Danitha Dinuwan**  
 IJSE – Galle | 70th Batch  
 
-Crafted with ❤️ by passionate & innovative students  
 
 [![GitHub](https://img.shields.io/badge/GitHub-Danitha--Hk-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/DanithaHk)
 
